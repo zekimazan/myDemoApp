@@ -23,6 +23,8 @@ public class App
     }
 
     public static void main(String[] args) {
+        port(getHerokuAssignedPort());
+
         get("/", (req, res) -> "Hello, World");
 
         post("/compute", (req, res) -> {
@@ -46,7 +48,7 @@ public class App
 
           boolean result = App.search(inputList, input2AsInt);
 
-         Map map = new HashMap();
+          Map map = new HashMap();
           map.put("result", result);
           return new ModelAndView(map, "compute.mustache");
         }, new MustacheTemplateEngine());
@@ -59,5 +61,13 @@ public class App
               return new ModelAndView(map, "compute.mustache");
             },
             new MustacheTemplateEngine());
+    }
+
+    static int getHerokuAssignedPort() {
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        if (processBuilder.environment().get("PORT") != null) {
+            return Integer.parseInt(processBuilder.environment().get("PORT"));
+        }
+        return 4567; //return default port if heroku-port isn't set (i.e. on localhost)
     }
 }
