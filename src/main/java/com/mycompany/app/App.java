@@ -12,14 +12,14 @@ import spark.template.mustache.MustacheTemplateEngine;
 
 public class App
 {
-    public static boolean search(ArrayList<Integer> array, int e) {
-      System.out.println("inside search");
-      if (array == null) return false;
-
+    public static int searchBetween(ArrayList<Integer> array, int lower, int upper) {
+      System.out.println("inside searchBetween");
+      if (array == null) return 0;
+      int total = 0;
       for (int elt : array) {
-        if (elt == e) return true;
+        if (elt >= lower && elt <= upper) total++;
       }
-      return false;
+      return total;
     }
 
     public static void main(String[] args) {
@@ -46,7 +46,10 @@ public class App
           String input2 = req.queryParams("input2").replaceAll("\\s","");
           int input2AsInt = Integer.parseInt(input2);
 
-          boolean result = App.search(inputList, input2AsInt);
+          String input3 = req.queryParams("input3").replaceAll("\\s","");
+          int input3AsInt = Integer.parseInt(input3);
+
+          int result = App.searchBetween(inputList, input2AsInt, input3AsInt);
 
           Map map = new HashMap();
           map.put("result", result);

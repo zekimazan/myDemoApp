@@ -11,22 +11,27 @@ import java.util.Arrays;
 public class AppTest 
     extends TestCase
 {
-   public void testFound() {
-      ArrayList<Integer> array = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
-      assertTrue(new App().search(array, 4));
+    public void testFoundOne() {
+      ArrayList<Integer> array = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6));
+      assertEquals(new App().searchBetween(array, 4, 4), 1);
+    }
+
+    public void testFoundMany() {
+      ArrayList<Integer> array = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6));
+      assertEquals(new App().searchBetween(array, 4, 4), 1);
     }
 
     public void testNotFound() {
-      ArrayList<Integer> array = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4));
-      assertFalse(new App().search(array, 5));
+      ArrayList<Integer> array = new ArrayList<Integer>(Arrays.asList(1, 2, 3, 4, 5, 6));
+      assertEquals(new App().searchBetween(array, 1, 6), 6);
     }
 
     public void testEmptyArray() {
       ArrayList<Integer> array = new ArrayList<Integer>();
-      assertFalse(new App().search(array, 1));
+      assertEquals(new App().searchBetween(array, 1, 3), 0);
     }
 
     public void testNull() {
-      assertFalse(new App().search(null, 1));
+      assertEquals(new App().searchBetween(null, 1, 5), 0);
     }
 }
